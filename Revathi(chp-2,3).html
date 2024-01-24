@@ -1,0 +1,306 @@
+<html>
+    <head>
+        <title></title>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+    </head>
+<body>
+   <hr style="height: 2px; color: black; background-color: black;"><br>
+   <p style="font-size: 16px;"><b>Chapter 2. Installing the NetView Management Console</b></p>
+   <div class="a">
+   <p>Installation instructions are provided in the installation README files. This<br> chapter provides information on selecting the correct README file based on<br> whether you are installing the topology server or topology console and <br>information about configuring some parts of the NetView management console.<br> For additional installation information about the various features of the NetView<br> management console, see <i>IBM Tivoli NetView for z/OS Installation: Configuring <br>Graphical Components.</i></p>
+
+   <p>The README files contain installation instructions, hardware and software<br> requirements, and late-breaking news. They are available in the following<br>locations:</p>
+   <p>v The NetView CD-ROM in the README directory under the ENU or JPN <br>&nbsp;&nbsp;&nbsp;&nbsp;subdirectories, where ENU represents English and JPN represents Japanese.</p>
+   <p>v The NetView product support web page. From the NetView web page,<br>&nbsp;&nbsp;&nbsp;&nbsp; (http://www.ibm.com/software/tivoli/products/netview-zos/), in the<br>&nbsp;&nbsp;&nbsp;&nbsp; Overview pane, click the link for <b>Product support.</b> On the support page that<br>&nbsp;&nbsp;&nbsp;&nbsp; opens, in the Support shortcuts pane, expand <b>Tivoli NetView for z/OS </b>(if it is<br>&nbsp;&nbsp;&nbsp;&nbsp; not expanded), and click <b>Fixes (downloads).</b></p>
+   <p>For complete installation instructions for the topology console, see the EGVREAD1<br> README file (English) or the EGVREAD3 README file (Japanese).</p>
+   <p>For complete installation instructions for the topology server, see the EGVREAD2<br> README file (English) or the EGVREAD4 README file (Japanese).</p>
+</div>
+   <hr style="color: black; background-color: black; height: 1px;">
+<p style="font-size: 16px;"><b>Defining the NetView for z/OS User ID and Password on the Topology Server</b></p>
+<div class="a">
+ <p>Using the optional <b>hostcmd</b> command to send commands from the topology server<br> (using a command prompt on the topology server workstation) to the z/OS<br> environment requires a Tivoli NetView for z/OS operator ID and password or<br> password phrase. If the operator ID and password or password phrase can be<br> determined in any of the following three ways and in the following order, the<br> <b>hostcmd</b> command does not prompt you for them:</p>
+ <p>1. The <b>tserver hostcmd</b> command is issued with the -u and -p options, which<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;specify the user (operator) ID and password or password phrase. This method<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;overrides the other 2 methods.</p>
+<p>2. The <b>tserver hostcmdoper</b> command is used to set the operator ID and<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;password or password phrase. This command encrypts the password or or<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;password phrase and stores it on disk. This method is overridden by the<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;previous method and overrides the following method.</p>
+<p>3. The ihsshstc.cfg file is customized by using the following steps. This method<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;is overridden by either of the other 2 methods.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;a. &nbsp;&nbsp;In a workstation command window, change to one of the following<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directories:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v For Windows systems: %BINDIR%\TDS\server\config<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v For AIX or Linux systems: $BINDIR/TDS/server/config</p><hr><hr>
+
+
+<p>b. Edit the ihsshstc.cfg file to specify the operator ID and the password or<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;password phrase of the NetView operator for which the commands are to<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;be run.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;v Specify the NetView operator ID in the OPER_ID parameter.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;v Specify the password or password phrase for that operator ID in the<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OPER_PW parameter.</p><hr><hr>
+</div>
+
+<hr style="color: black; background-color: black; height: 2px;">
+<p style="font-size: 16px;"><b>Chapter 3. Customizing the NetView Management Console<br>
+    Topology Server</b></p>
+ <div class="a">
+<p>This chapter describes customization of the NetView management console<br>
+    topology server to perform specific functions.</p></div>
+<hr style="color: black; background-color: black; height: 1px;">
+<p style="font-size: 16px;"><b>Modifying the Server Properties File</b></p>
+<div class="a">
+<p>You can customize the NetView management console topology server by<br>
+    modifying the server.properties file, which is provided with the topology server.<br>
+    One reason to customize this file is to set the defaults for the audit log, as<br>
+    described in “Auditing Functions and the Server.Properties File.”</p>
+<p>The server.properties file is a plain text configuration file that enables control of<br>
+    the following functions:<br>
+    v Communications timeouts<br>
+    v Performance tuning<br>
+    v View appearance<br>
+    v Audit log attributes</p>
+<p>These functions are used by the server at run time and affect all consoles attached<br>
+    to the server. Usually, the settings in the server.properties file should be left at<br>
+    the default levels. The file contains a detailed description of the items available for<br>
+    configuration. The server.properties file is located in one of the following<br>
+    directories:<br>
+    v For Windows systems: %BINDIR%\TDS\server\config<br>
+    v For AIX or Linux systems: $BINDIR/TDS/server/config<br></p>
+<p>To customize topology server functions, perform the following steps:<br>
+    1. Make a backup copy of the server.properties file.<br>
+    2. Open the server.properties file in a text editor and make the necessary<br>
+    changes.<br>
+    3. Restart the topology server so that the changes can take effect.</p>
+</div>
+<hr style="color: black; background-color: black; height: 1px;">
+<p style="font-size: 16px;"><b>Auditing Functions and the Server.Properties File</b></p>
+<div class="a">
+  <p>The server.properties file contains auditing function specifications that can be set<br>
+    to control the output and format of the auditing log.</p>
+</div>
+<p style="font-size: 16px; padding-left: 5%;"><b>Customizing the Functions to be Audited</b></p>
+<div class="a">
+<p>You can determine which functions to audit in the server.properties file. The<br>
+    attribute for each of the functions that can be audited can have two possible<br>
+    values. If the attribute value is 1, the auditing is performed. If the attribute value is<br>
+    0 (zero) then auditing is not performed. If a value that is not valid is assigned to<br>
+    the attribute, then the default value is used. Table 2 on page 12 describes the<br>
+    attributes and gives the default value for each.</p><hr><hr>
+
+<p><i>Table 2. Auditing function attributes.</i></p>
+  <table border="1" cellpadding="6" cellspacing="7">
+     <th><b>Attribute in server.properties file </b></th><th>Description of function to be (or<br>not to be) audited</th><th>Default<br>value</th>
+     <tr><td>auditAggregationChange </td><td>Aggregation priority and threshold<br>change requests</td><td>0</td></tr>
+     <tr><td>auditCommand </td><td>Listing commands to be run</td><td>0</td></tr>
+     <tr><td>auditCommandResponse  </td><td>Listing responses to commands </td><td>0</td></tr>
+     <tr><td>auditConsoleSignonSignoff </td><td>Signing on and off of the NetView<br>management console topology<br>console</td><td>1</td></tr>
+     <tr><td>auditCPESignonSignoff </td><td>Signing on and off of the command<br>profile editor (CPE) batch utility</td><td>1</td></tr>
+     <tr><td>auditFlagChange</td><td>Flag change and list suspended<br>resources requests</td><td>0</td></tr>
+     <tr><td>auditNetconvUpDown </td><td>Running the NETCONV command<br> to start and stop communication<br> between the host and server</td><td>1</td></tr>
+     <tr><td>auditSendMessage</td><td>Sending messages</td><td>0</td></tr>
+     <tr><td>auditServerStartStop</td><td>Starting and stopping the NetView<br>management console topology<br>server</td><td>1</td></tr>
+     <tr><td>auditViewClose</td><td>Closing views</td><td>0</td></tr>
+     <tr><td>auditViewCustomizationSaveRemove</td><td>Saving, removing, and deleting<br>customized views</td><td>0</td></tr>
+     <tr><td>auditViewOpenRequest</td><td>Requesting views from the NetView<br>host</td><td>0</td></tr>
+     <tr><td>auditViewOpenResponse</td><td>Opening views</td><td>0</td></tr>
+</table>
+</div>
+<p style="font-size: 16px;"><b>Customizing the Audit Log for Viewing</b></p>
+<div class="a">
+<p>The ihsaudit.xml file is the log file which contains the data specified by the<br>
+    attributes in the server.properties file as described in the section “Customizing<br>
+    the Functions to be Audited” on page 11.</p>
+<p>For example, an ihsaudit.xml file can contain audit entries indicating the start and<br>
+    initialization of a NetView management console topology server, netconv<br>
+    communication from the NetView management console topology server to a host,<br>
+    and a NetView management console topology console signing on to the NetView<br>
+    management console topology server. The following example contains such audit<br>
+    entries:<br>
+<img src="C:\Users\my pc\OneDrive\Desktop\html1/Tb(ch-3).jpg"><hr><hr>
+
+<img src="C:\Users\my pc\OneDrive\Desktop\html1/Tb(ch-3.1).jpg">
+<p>Refer to Appendix F, “Auditing and the ihsaudit.xml File,” on page 151 for<br>
+    information about elements in the ihsaudit.xml file.</p>
+<p>The audit log can be viewed by a Web browser, or other application, which<br>
+    supports XML. To enable a Web browser or other XML application to display the<br>
+    contents of the audit log properly, header lines must be inserted in the<br>
+    ihsaudit.xml log file. These lines are set in the server.properties file and<br>
+    determine the appropriate style sheet to be used for the browser. The header lines<br>
+    are inserted only when the topology server creates a new ihsaudit.xml file, not<br>
+    every time an audit entry is written to the file.</p>
+<p><b>Note:</b> Ensure that your Web browser or XML application supports the format of<br>
+    the style sheet that you choose.</p>
+<p>The audit log file is located in one of the following directories:<br>
+    v For Windows systems: %BINDIR%\TDS\server\log<br>
+    v For AIX or Linux systems: $BINDIR/TDS/server/log</p>
+<p>Table 3 describes the XML attributes in the server.properties file.</p>
+<p><i>Table 3. XML attributes set in the server.properties file.</i></p>
+<table border="1" cellpadding="6" cellspacing="7">
+    <th>Attribute in<br>server.properties file</th><th>Description of function</th><th>Default<br>value</th>
+    <tr><td>auditLogHeaderLine.1</td><td>Sets the XML version</td><td>1.0</td></tr>
+    <tr><td>auditLogHeaderLine.2</td><td>Sets the style sheet to be used to enable the<br>appropriate Web browser or XML application</td><td>ihsaudit.css</td></tr>
+</table><br>
+<p>Example:</p>
+<img src="C:\Users\my pc\OneDrive\Desktop\html1/Tb(ch-3.2).jpg"><hr><hr>
+</div>
+
+
+<p style="font-size: 16px;"><b>Customizing the Size of the Audit Log</b></p>
+ <div class="a">
+<p>When the audit log file reaches the size specified with the auditLogFileMaxSize<br>
+    attribute in the server.properties file, it is renamed ihsaudit.bak. A new<br>
+    ihsaudit.xml file is then created. It is possible for the audit log to be slightly<br>
+    greater in size than specified by the auditLogFileMaxSize attribute. Audit entries<br>
+    are written to the log until the file size is equal to or greater than the value of<br>
+    auditLogFileMaxSize. For example, if the actual size of the file is 999 999 and the<br>
+    auditLogFileMaxSize is set to 1 000 000, then one more audit log entry is written<br>
+    to the file. Table 4 describes the auditLogFileMaxSize attribute in the<br>
+    server.properties file.</p>
+
+<p><i>Table 4. Audit log size attribute set in the server.properties file.</i></p>  
+<table border="1" cellpadding="6" cellspacing="7">
+    <th>Attribute in<br>server.properties file</th><th>Description</th><th>Default<br>value</th><th>Valid values</th>
+    <tr><td>auditLogFileMaxSize </td><td>Determines the size of the audit log<br>file, in megabytes</td><td>20</td><td>1–1000 (1<br>megabyte to<br>1 gigabyte)<br></td></tr>
+</table> <br>
+<p>If the value for the auditLogFileMaxSize attribute is set to 20, then the maximum<br>
+    file size is actually 20 000 000 bytes.</p>
+<p><b>Notes:</b><br>
+    1. &nbsp;If an incorrect value is entered for the auditLogFileMaxSize attribute, the<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;default value is used.<br>
+    2. If there was a previous ihsaudit.bak file, that file is deleted and replaced with<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;the most current ihsaudit.xml backed up and renamed ihsaudit.bak.</p>
+</div>
+<p style="font-size: 16px;"><b>Customizing the Length of Command Responses within the<br>
+    Audit Log</b></p>
+<div class="a">
+    <p>Audit log entries for command responses are written to the audit log if the<br>
+        auditCommandResponse value specified in the server.properties file is set to 1. The<br>
+        auditCommandResponse attribute is described in “Customizing the Functions to be<br>
+        Audited” on page 11. The maximum line length of these command responses can<br>
+        be specified in the server.properties file with the auditCommandResponseMaxSize<br>
+        attribute. When command responses exceed the length specified by this attribute,<br>
+        they are truncated in the audit log. Table 5 describes the<br>
+        auditCommandResponseMaxSize attribute in the server.properties file.</p>
+<p><i>Table 5. Command response length attribute set in the server.properties file.</i></p>
+<table border="1" cellpadding="6" cellspacing="7">
+    <th>Attribute in server.properties file</th><th>Description </th><th>Default<br>value</th><th>Valid values</th>
+    <tr><td>auditCommandResponseMaxSize</td><td>Determines the<br>
+        maximum line length of<br>
+        command responses, in<br>
+        bytes, written to the<br>
+        audit log.</td><td>1000</td><td>0–10 000</td></tr>
+</table><br>
+<p><b>Notes:</b><br>
+    1.&nbsp;&nbsp; The 0 (zero) value indicates that the command response is not truncated.<br>
+    2.&nbsp;&nbsp; If an incorrect value is entered, the default value 1 000, is used.<br>
+    3.&nbsp;&nbsp; If the command response contains an ampersand, (&), then the truncated string<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;can be a few characters shorter or longer than the</p><hr><hr>
+
+
+<p>auditCommandResponseMaxSize indicates. If an ampersand (&) has been<br>
+    translated to a string of characters that can be browsed (&amp;), for example,<br>
+    then the complete string is included in the truncated command response,<br>
+    regardless of the length of the string.</p>
+</div>
+<p style="font-size: 16px;"><b>Customizing Special Characters to be Browsed</b></p>
+<div class="a">
+    <p>Without using the auditTranslateToBrowseableChars attribute in the<br>
+        server.properties file, the following set of characters can cause an error so that<br>
+        the ihsaudit.xml file cannot be opened in a browser:<br>
+        v & (ampersand)<br>
+        v < (less than)<br>
+        v > (greater than)</p>
+    <p>The auditTranslateToBrowseableChars changes these characters to a string of<br>
+        characters that can be browsed within the following XML tags:<br>
+        <img src="C:\Users\my pc\OneDrive\Desktop\html1/Tb(ch-3.3).jpg">
+    <p>The auditTranslateToBrowseableChars attribute in the server.properties file<br>
+        translates these characters so that the ihsaudit.xml file can be viewed by a browser.<br>
+        The auditTranslateToBrowseableChars attribute in the server.properties file is<br>
+        described in Table 6.</p>
+    <p><i>Table 6. Characters to be browsed attribute set in the server.properties file.</i></p>
+<table border="1" cellpadding="6" cellspacing="7">
+    <th>Attribute in server.properties file</th><th>Description</th><th>Default<br>value</th><th>Valid<br>values</th>
+    <tr><td>auditTranslateToBrowseableChars </td><td>When set to 1, this<br>
+        attribute translates the<br>
+        characters in the following<br>
+        way:<br>
+        v & to &amp;<br>
+        v < to &lt;<br>
+        v > to &gt;<br><br>
+        When set to 0, these<br>
+        characters are not<br>
+        translated.</td><td>1</td><td>0 or 1</td></tr>
+</table><br>
+<p><b>Note:</b> If a value other than 0 or 1 is entered for this attribute, the default (1) is<br>
+    used.</p>
+</div>
+<p style="font-size: 16px;"><b>Customizing the Replacement Character for Carriage Returns<br>
+    and Line Feeds</b></p>
+    <div class="a">
+<p>Command responses often contain carriage return and line feed characters. Some<br>
+    browsers are unable to display an audit entry that contains these characters.<br>
+    However, you can choose to replace the carriage return and line feed characters<br>
+    with a character or multiple characters of your choice. To insert characters for the<br>
+    carriage return and line feed characters, use the auditCarriageReturnReplacement</p><hr><hr>
+
+<p>attribute and specify the characters to be used for delineation with the<br>
+    auditCarriageReturnReplacementValue attribute in the server.properties file as<br>
+    described in Table 7.</p>
+<p><i>Table 7. Line return delineation attribute set in the server.properties file.</i></p>
+<table border="1" cellpadding="6" cellspacing="7">
+    <th>Attribute in server.properties file</th><th>Description</th><th>Default<br>value</th><th>Valid<br>values</th>
+    <tr><td>auditCarriageReturnReplacement</td><td>Determines if the<br>
+        carriage returns and<br>
+        line feeds are to be<br>
+        replaced with a<br>
+        character or characters</td><td>1</td><td>0 and 1</td></tr>
+    <tr><td>auditCarriageReturnReplacementValue</td><td>If the value of<br>
+        auditCarriage<br>
+        ReturnReplacement is<br>
+        1, determines the<br>
+        characters with which<br>
+        to replace the carriage<br>
+        returns and line feeds.</td><td>null (this<br>
+            field is<br>
+            empty)</td><td>0 to 25<br>bytes</td></tr>
+</table><br>
+<p>When the auditCarriageReturnReplacement value is set to 1, the<br>
+    auditCarriageReturnReplacementValue is examined and the value assigned to the<br>
+    auditCarriageReturnReplacementValue attribute is used as the delimiter between<br>
+    lines. If the auditCarriageReturnReplacementValue attribute is not assigned a value<br>
+    (but the auditCarriageReturnReplacement attribute value is set to 1) then the<br>
+    carriage return and line feed characters are replaced with a single blank character.</p>
+<p>When the value of auditCarriageReturnReplacement is set to 0, then no<br>
+    replacements occur and the auditCarriageReturnReplacementValue is ignored.</p>
+<p><b>Notes:</b><br>
+    1.&nbsp;&nbsp; The value assigned to the auditCarriageReturnReplacementValue field is not<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interpreted but is used as it occurs. For example, if the<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;auditCarriageReturnReplacementValue value is set to /n, then the two<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;characters /n replace the carriage return and line feed characters; this does not<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cause a line return.<br>
+    2.&nbsp;&nbsp; If the value assigned to the auditCarriageReturnReplacementValue attribute is<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;longer than 25 characters, the string is truncated to the first 25 characters.</p>
+</div>
+
+
+
+    </body>
+<style>
+    body{
+        padding-left: 25%;
+    }
+.a{
+    padding-left: 10%;
+}
+th,td{
+    padding: 5px;
+}
+</style>
